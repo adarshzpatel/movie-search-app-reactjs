@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-import ShowDetails from "./components/show/ShowDetails";
+import ShowDetails from "./pages/ShowDetails";
 import Home from "./pages/Home";
 import Starred from "./pages/Starred";
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ImageNotFound from "../ImageNotFound";
 
 function ShowCard({ id, image, name, summary }) {
   const summaryText = summary
@@ -7,7 +8,7 @@ function ShowCard({ id, image, name, summary }) {
     : "No Description";
   return (
     <div className="bg-white shadow-md transition-all transform-gpu hover:scale-105 hover:shadow-2xl p-4 rounded-lg w-[240px] flex flex-col gap-1 justify-between">
-      {image !== ''?(<img src={image} className='rounded-lg object-cover' alt={name} />):(<div className='rounded-lg  h-[292.18px] flex justify-center items-center font-medium text-xl  text-gray-400 bg-gray-300'>Image Not Found !</div>)}
+      {image !== ''?(<img src={image} className='rounded-lg object-cover' alt={name} />):(<ImageNotFound/>)}
       <h2 className='text-xl font-semibold'>{name}</h2>
       <p className='text-gray-700 text-sm'>{summaryText}</p>
       <div className='flex justify-between '>
