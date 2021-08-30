@@ -1,9 +1,10 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
+import { apiGet } from "./config";
 
 function showsReducer(prevState,action){
     switch(action.type){
         case 'ADD': return [...prevState,action.showId]
-        case 'REMOVE': return prevState.filter((showId)=> showId!=action.showId)
+        case 'REMOVE': return prevState.filter((showId)=> showId!==action.showId)
         default : return prevState;
     }
 }
@@ -20,6 +21,61 @@ function usePersistedReducer(reducer,initialState,key){
     return [state,dispatch];
 }
 
-function useShows(key='shows'){
+export function useShows(key='shows'){
     return usePersistedReducer(showsReducer,[],key);
+}
+
+export function useLastQuery(key= 'lastQuery'){
+     const[input,setInput] = useState(()=>{
+         const persisted = sessionStorage.getItem(key);
+         return persisted? JSON.parse(persisted) : '';
+     });
+
+     const setPersistedInput = newState => {
+         setInput(newState);
+         sessionStorage.setItem(key,JSON.stringify(newState));
+
+     }
+     return [input,setPersistedInput];
+}
+
+const reducer = (prevState, action) => {
+    switch (action.type) {
+      case "FETCH_SUCCESS": {
+        return { error: null, isLoading: false, show: action.show };
+      }
+      case "FETCH_FAILED": {
+        return { ...prevState, error: action.error, isLoading: false };
+      }
+      default:
+        return prevState;
+    }
+  };
+  
+  const initialState = {
+    show: null,
+    isLoading: true,
+    error: null,
+  };
+
+export function useShow(showId){
+    const [state,dispatch] = useReducer(reducer, initialState);
+  
+    useEffect(() => {
+      let isMounted = true;
+      apiGet(`/shows/${showId}?embed[]=seasons&embed[]=cast`)
+        .then((results) => {
+          setTimeout(() => {
+            dispatch({type: 'FETCH_SUCCESS',show:results})
+          }, 2000);
+        })
+        .catch((err) => {
+          dispatch({type: 'FETCH_FAILED',error: err.message})
+  
+        });
+        return ()=>{
+          isMounted = false;
+        }
+    }, [showId]);
+    return state;
 }

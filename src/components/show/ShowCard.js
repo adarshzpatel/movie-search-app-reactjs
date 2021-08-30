@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ImageNotFound from "../ImageNotFound";
 
-function ShowCard({ id, image, name, summary }) {
+function ShowCard({ id, image, name, summary,onStarClick,isStarred }) {
   const summaryText = summary
     ? `${summary.split(" ").slice(0, 10).join(" ").replace(/<.+?>/g, "")}...`
     : "No Description";
@@ -13,7 +13,9 @@ function ShowCard({ id, image, name, summary }) {
       <p className='text-gray-700 text-sm'>{summaryText}</p>
       <div className='flex justify-between '>
         <Link to={`/show/${id}`} className=' hover:border-b-4 transition-all font-medium border-yellow-400 text-blue-600  focus:outline-none'>View Details</Link>
-        <button className='focus:outline-none'><StarOutline className='h-6 w-6'/></button>
+        <button onClick={onStarClick} className='focus:outline-none text-yellow-500'>
+          {isStarred?(<StarFilled className='h-7 w-7'/>):(<StarOutline className='h-6 w-6'/>)}
+          </button>
       </div>
     </div>
   );
