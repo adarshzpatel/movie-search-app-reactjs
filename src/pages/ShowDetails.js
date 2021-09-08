@@ -7,11 +7,9 @@ import Seasons from "../components/showDetails/Seasons";
 
 import { useShow } from "../misc/customHook";
 
-
-
 function ShowDetails() {
   const { id } = useParams();
-  const {show,isLoading,error} = useShow(id);
+  const { show, isLoading, error } = useShow(id);
 
   if (isLoading) {
     return <div>Fetching Data...</div>;
@@ -22,13 +20,22 @@ function ShowDetails() {
   }
 
   return (
-    <div>
-      <div><MainData image={show.image} name={show.name} summary={show.summary} rating={show.rating} tags={show.genres}/></div>
-      <div><Details status={show.status} network={show.network} premiered={show.premiered}/></div>
-      <div><Seasons seasons={show._embedded.seasons}/></div>
-      <div><Cast cast={show._embedded.cast}/></div>
+    <div className="p-4  w-full  max-w-screen-lg mx-auto">
+      <MainData
+        image={show.image}
+        name={show.name}
+        summary={show.summary}
+        rating={show.rating}
+        tags={show.genres}
+        status={show.status}
+        network={show.network}
+        premiered={show.premiered}
+      />
+
+      <Seasons seasons={show._embedded.seasons} />
+      <Cast cast={show._embedded.cast} />
     </div>
-    )
+  );
 }
 
 export default ShowDetails;
