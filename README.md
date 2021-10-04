@@ -1,4 +1,4 @@
-# [Movie Search App link](https://react-movie-searchx.netlify.app/)
+# [Movie Search App](https://react-movie-searchx.netlify.app/)
 
 - Search Movies and view their details.
 - Search Actors
