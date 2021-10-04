@@ -1,7 +1,6 @@
-import React, { useEffect, useReducer } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Cast from "../components/showDetails/Cast";
-import Details from "../components/showDetails/Details";
 import MainData from "../components/showDetails/MainData";
 import Seasons from "../components/showDetails/Seasons";
 

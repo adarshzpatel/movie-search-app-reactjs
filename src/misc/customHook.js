@@ -62,7 +62,7 @@ export function useShow(showId){
     const [state,dispatch] = useReducer(reducer, initialState);
   
     useEffect(() => {
-      let isMounted = true;
+    
       apiGet(`/shows/${showId}?embed[]=seasons&embed[]=cast`)
         .then((results) => {
           setTimeout(() => {
@@ -73,9 +73,6 @@ export function useShow(showId){
           dispatch({type: 'FETCH_FAILED',error: err.message})
   
         });
-        return ()=>{
-          isMounted = false;
-        }
     }, [showId]);
     return state;
 }
